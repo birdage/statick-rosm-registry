@@ -1,6 +1,7 @@
 """Plugin to generate .json reports for the ROS-M registry."""
 from __future__ import print_function
 
+from Collections import OrderedDict
 import json
 import os
 
@@ -28,6 +29,13 @@ class UploadRiskAssessmentReportingPlugin(ReportingPlugin):
             level: (:obj:`str`): Name of the level used in the scan
         """
         risk_assessment = risk_analyzer.get_risk_analysis(issues, self.plugin_context, package.name, level)
+        output_dict = {}
+        output_dict['risk_assessment'] = risk_assessment.to_dict()
+        output_dict['issue_count_by_tool'] = {}
+        for key, value in issues.iteritems():
+            unique_issues = list(OrderedDict.fromkeys(value))
+            output_dict['issue_count_by_tool'][key] = len(unique_issues)
+
         # Write the file
         output_dir = os.path.join(self.plugin_context.args.output_directory,
                                   package.name + "-" + level)
@@ -36,7 +44,7 @@ class UploadRiskAssessmentReportingPlugin(ReportingPlugin):
                                    package.name + "-" + level + ".json")
         print("Writing output to {}".format(output_file))
         with open(output_file, "w") as out:
-            out.write(json.dumps(risk_assessment.to_dict()))
+            out.write(json.dumps(out.write(json.dumps(output_dict))))
         # For future use once an upload strategy is figured out
         # upload_url = self.plugin_context.config.get_reporting_config(self.get_name(), level, 'upload_url')
         # if not upload_url:
