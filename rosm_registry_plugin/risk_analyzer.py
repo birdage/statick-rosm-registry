@@ -67,7 +67,7 @@ class RiskAnalyzer(object):
                 rule violations
         """
         print('---Generating Risk Analysis---')
-        for tool in issues.iteritems():
+        for tool in list(issues.items()):
             self.analysis.add_tool(tool[0])
             for violation in tool[1]:
                 if violation.cert_reference in self.rule_to_analysis.keys():
