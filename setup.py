@@ -19,7 +19,7 @@ setup(
     author='Soar Technology, Inc.',
     name='statick-rosm-registry',
     description='Statick extension to generate files for the ROS-M registry.',
-    version='0.1.0',
+    version='0.1.1',
     packages=['statick_tool', 'statick_tool.plugins.reporting.rosm_registry_plugin'],
     package_dir={'statick_tool.plugins.reporting.rosm_registry_plugin': 'rosm_registry_plugin',
                  'statick_tool': '.'},
