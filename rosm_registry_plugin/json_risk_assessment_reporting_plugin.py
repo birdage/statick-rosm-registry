@@ -5,9 +5,8 @@ import json
 import os
 from collections import OrderedDict
 
+from statick_tool.plugins.reporting.rosm_registry_plugin import risk_analyzer
 from statick_tool.reporting_plugin import ReportingPlugin
-
-import rosm_registry_plugin.risk_analyzer as risk_analyzer
 
 
 class JSONRiskAssessmentReportingPlugin(ReportingPlugin):
