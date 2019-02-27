@@ -433,6 +433,7 @@ IDS06-J,Medium,Unlikely,Medium,P4,L3
 IDS07-J,High,Probable,Medium,P12,L1
 IDS11-J,High,Probable,Medium,P12,L1
 IDS16-J,High,Probable,Medium,P12,L1
+IDS17-J,Medium,Probable,Medium,P8,L2
 JNI00-J,Medium,Probable,High,P4,L3
 LCK00-J,Low,Probable,Medium,P4,L3
 LCK01-J,Medium,Probable,Medium,P8,L2
