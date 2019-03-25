@@ -3,6 +3,8 @@ import argparse
 import json
 import os
 
+from yapsy.PluginManager import PluginManager
+
 import statick_tool
 from statick_tool.config import Config
 from statick_tool.issue import Issue
@@ -12,7 +14,6 @@ from statick_tool.plugins.reporting.rosm_registry_plugin.json_risk_assessment_re
     JSONRiskAssessmentReportingPlugin
 from statick_tool.reporting_plugin import ReportingPlugin
 from statick_tool.resources import Resources
-from yapsy.PluginManager import PluginManager
 
 
 def setup_json_reporting_plugin():
