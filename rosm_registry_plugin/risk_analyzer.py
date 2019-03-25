@@ -4,7 +4,7 @@ from __future__ import print_function
 import csv
 import time
 
-_risk_analysis = None
+_RISK_ANALYSIS = None
 
 
 def get_risk_analysis(issues, plugin_context, package_name, level):
@@ -20,14 +20,17 @@ def get_risk_analysis(issues, plugin_context, package_name, level):
         issues (:obj:`dict` of :obj:`str` to :obj:`Issue`): Map of tools to
                the issues they returned.
     """
-    global _risk_analysis
-    if _risk_analysis is None:
-        risk_analyzer = RiskAnalyzer(package_name, level, plugin_context.resources.get_file("cert_severity_likelihood.txt"))
-        _risk_analysis = risk_analyzer.generate_analysis(issues)
-    return _risk_analysis
+    global _RISK_ANALYSIS  # pylint: disable=global-statement
+    if _RISK_ANALYSIS is None:
+        risk_analyzer = RiskAnalyzer(package_name, level,
+                                     plugin_context.resources.
+                                     get_file("cert_severity_likelihood.txt"))
+        _RISK_ANALYSIS = risk_analyzer.generate_analysis(issues)
+    return _RISK_ANALYSIS
 
 
-class RiskAnalyzer(object):
+# pylint: disable=too-few-public-methods
+class RiskAnalyzer():
     """
     A plugin to convert CERT issues to risk assessments.
 
@@ -40,8 +43,11 @@ class RiskAnalyzer(object):
     is why we aren't just using the provided L1/2/3 format.
     """
 
-    SEVERITY_LIKELIHOOD_MAP = {'Low': {'Unlikely': 'Low', 'Probable': 'Low', 'Likely': 'Low'}, 'Medium': {'Unlikely': 'Low', 'Probable': 'Moderate', 'Likely': 'Moderate'},
-                               'High': {'Unlikely': 'Low', 'Probable': 'Moderate', 'Likely': 'High'}}
+    SEVERITY_LIKELIHOOD_MAP = {'Low': {'Unlikely': 'Low', 'Probable': 'Low', 'Likely': 'Low'},
+                               'Medium': {'Unlikely': 'Low', 'Probable': 'Moderate',
+                                          'Likely': 'Moderate'},
+                               'High': {'Unlikely': 'Low', 'Probable': 'Moderate',
+                                        'Likely': 'High'}}
     rule_to_analysis = {}
     analysis = None
 
@@ -73,14 +79,15 @@ class RiskAnalyzer(object):
                 if violation.cert_reference in self.rule_to_analysis.keys():
                     severity = self.rule_to_analysis[violation.cert_reference]['severity']
                     likelihood = self.rule_to_analysis[violation.cert_reference]['likelihood']
-                    self.analysis.add_issue(self.SEVERITY_LIKELIHOOD_MAP[severity][likelihood], violation.cert_reference)
+                    self.analysis.add_issue(self.SEVERITY_LIKELIHOOD_MAP[severity][likelihood],
+                                            violation.cert_reference)
                 elif violation.cert_reference is not None:
                     print("Couldn't look up rule " + violation.cert_reference)
         self.analysis.timestamp = time.time()
         return self.analysis
 
 
-class RiskAnalysis(object):
+class RiskAnalysis():
     """
     A report of the security risks found in scanned code.
 
@@ -150,3 +157,4 @@ class RiskAnalysis(object):
         result['tools_used'] = list(self.tools)
         result['timestamp'] = self.timestamp
         return result
+# pylint: enable=too-few-public-methods

@@ -12,9 +12,11 @@ from statick_tool.reporting_plugin import ReportingPlugin
 class JSONRiskAssessmentReportingPlugin(ReportingPlugin):
     """A plugin to generate a JSON with a risk assessment."""
 
+    # pyflakes: disable=no-self-use
     def get_name(self):
         """Get the name of the reporting plugin."""
         return 'upload_risk_assessment'
+    # pyflakes: enable=no-self-use
 
     def report(self, package, issues, level):
         """
