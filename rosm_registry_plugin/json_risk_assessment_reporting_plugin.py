@@ -27,7 +27,8 @@ class JSONRiskAssessmentReportingPlugin(ReportingPlugin):
                 them.
             level: (:obj:`str`): Name of the level used in the scan
         """
-        risk_assessment = risk_analyzer.get_risk_analysis(issues, self.plugin_context, package.name, level)
+        risk_assessment = risk_analyzer.get_risk_analysis(issues, self.plugin_context,
+                                                          package.name, level)
         output_dict = {}
         output_dict['risk_assessment'] = risk_assessment.to_dict()
         output_dict['issue_count_by_tool'] = {}
@@ -44,12 +45,3 @@ class JSONRiskAssessmentReportingPlugin(ReportingPlugin):
         print("Writing output to {}".format(output_file))
         with open(output_file, "w") as out:
             out.write(json.dumps(output_dict))
-        # For future use once an upload strategy is figured out
-        # upload_url = self.plugin_context.config.get_reporting_config(self.get_name(), level, 'upload_url')
-        # if not upload_url:
-        #    print(('No upload URL configured for plugin {}, level {}').format(self.get_name(), level))
-        #    return
-        # parse = urlparse.urlparse(upload_url)
-        # if parse.path == '':
-        #     print(("Couldn't parse upload URL {} for plugin {}, level {}").format(upload_url, self.get_name(), level))
-        #     return
