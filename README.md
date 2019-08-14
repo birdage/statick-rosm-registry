@@ -16,3 +16,20 @@ The plugin should be automatically detected the next time you run Statick.
 ## Use Cases
 This plugin generates a .json file which can be manually uploaded to the ROS-M registry.
 Future work will add support for automatically uploading to the registry.
+
+## Example Confg.yaml
+
+* Generate a config file in `rsc` directory with the following structure
+``` yaml
+rosm:
+  rest:
+    url: <url to the ros rest service>
+    apiKey: <api key for accessing ROSM rest services>
+```
+
+## Testing
+* setup `pip install -r requirements.txt`
+* `python setup.py install`
+* `pip install .`
+* `pytest`
+* For local debugging use `pip install . && pytest -s -q -v`

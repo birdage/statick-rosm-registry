@@ -1,1 +1,4 @@
 statick
+pyyaml
+requests
+pytest
